@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Scrambler{% endblock %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.cubing.net/js/scramble-display" type="module"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="^^ url_for('static', filename='css/timer.css') ^^">
+</head>
+<body>
+    <div id="everything">
+        <scramble-display ref="scramble_display" class="scramble-display" v-bind:scramble="scramble"></scramble-display>
+        <h1 class="content">Here's your Scramble</h1>
+        
+        <div class="content">{{ scramble }}
+        </div>
+        <select class="content" v-model="selectedCube">
+            <option value="222">2x2</option>
+            <option value="333">3x3</option>
+            <option value="444">4x4</option>
+            <option value="555">5x5</option>
+            <option value="666">6x6</option>
+            <option value="777">7x7</option>
+        </select>
+        <p id="timer">{{ time }}</p>
+    </div>
+</body>
+<script>
+    const { createApp } = Vue
+    createApp({
+        data() {
+            return {
+                scramble: "",
+                selectedCube: "333",
+                time: "WIP"
+            }
+        },
+        mounted() {
+            this.fetch_scramble()
+        },
+        methods: {
+            async fetch_scramble() {
+                try{
+                    const response = await fetch("/api/scramble?cube=333")
+                    const data = await response.json()
+                    this.scramble = data.scramble
+                }
+                catch (error) {
+                console.error('Error fetching data:', error)
+                }
+            }
+        }
+    }).mount("#everything")
+
+</script>
+{% endblock %}
