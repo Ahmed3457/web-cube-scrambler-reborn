@@ -12,20 +12,22 @@
 <body>
     <div id="everything">
         <scramble-display ref="scramble_display" class="scramble-display" v-bind:scramble="scramble"></scramble-display>
-        <h1 class="content">Here's your Scramble</h1>
-        
-        <div class="content">{{ scramble }}
+        <div class="idk">
+            <h1 class="content" @click="onPressA">Here's your Scramble</h1>
+            <div class="content">{{ scramble }}
+                <select class="content" v-model="selectedCube">
+                    <option value="222">2x2</option>
+                    <option value="333">3x3</option>
+                    <option value="444">4x4</option>
+                    <option value="555">5x5</option>
+                    <option value="666">6x6</option>
+                    <option value="777">7x7</option>
+                </select>
+                <h1 id="timer">0:00.00</h1>
+            </div>
         </div>
-        <select class="content" v-model="selectedCube">
-            <option value="222">2x2</option>
-            <option value="333">3x3</option>
-            <option value="444">4x4</option>
-            <option value="555">5x5</option>
-            <option value="666">6x6</option>
-            <option value="777">7x7</option>
-        </select>
-        <p id="timer">{{ time }}</p>
     </div>
+<script src="^^ url_for('static', filename='js/main.js') ^^"></script>
 </body>
 <script>
     const { createApp } = Vue
@@ -50,6 +52,9 @@
                 catch (error) {
                 console.error('Error fetching data:', error)
                 }
+            },
+            onPressA() {
+                console.warn("A")
             }
         }
     }).mount("#everything")
